@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RightsInsight AI Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            background: #ffffff;
+            width: 400px;
+            max-width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .chat-body {
+            padding: 15px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 12px;
+        }
+
+        .user {
+            text-align: right;
+            color: #333;
+        }
+
+        .bot {
+            text-align: left;
+            color: #1e3c72;
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-footer input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .chat-footer button {
+            margin-left: 8px;
+            padding: 10px 15px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-footer button:hover {
+            background: #16325c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        RightsInsight AI Assistant
+    </div>
+
+    <div class="chat-body" id="chatBody">
+        <div class="message bot">
+            Hello! Describe your issue or ask about your fundamental rights.
+        </div>
+    </div>
+
+    <div class="chat-footer">
+        <input type="text" id="userInput" placeholder="Type your issue..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let message = input.value.trim();
+    if (message === "") return;
+
+    let chatBody = document.getElementById("chatBody");
+
+    // User message
+    let userDiv = document.createElement("div");
+    userDiv.className = "message user";
+    userDiv.innerText = message;
+    chatBody.appendChild(userDiv);
+
+    input.value = "";
+
+    fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        let botDiv = document.createElement("div");
+        botDiv.className = "message bot";
+        botDiv.innerText = data.reply;
+        chatBody.appendChild(botDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+}
+</script>
+
+</body>
+</html>
