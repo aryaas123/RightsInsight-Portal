@@ -1,0 +1,40 @@
+{
+  "intents": [
+    {
+      "tag": "equality",
+      "patterns": [
+        "discrimination",
+        "unequal treatment",
+        "caste discrimination",
+        "gender inequality",
+        "I faced discrimination at work",
+        "I am treated unfairly",
+        "I feel unequal",
+        "unfair treatment in office"
+      ],
+      "response": "This may relate to the Right to Equality, which ensures equality before law."
+    },
+    {
+      "tag": "speech",
+      "patterns": [
+        "freedom of speech",
+        "cannot express opinion",
+        "media restriction",
+        "I cannot speak freely",
+        "my opinion is ignored"
+      ],
+      "response": "This relates to the Right to Freedom of Speech and Expression."
+    },
+    {
+      "tag": "privacy",
+      "patterns": [
+        "phone monitoring",
+        "camera surveillance",
+        "data misuse",
+        "someone spying on me",
+        "my data is misused"
+      ],
+      "response": "This situation may involve the Right to Privacy."
+    }
+  ]
+}
