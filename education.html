@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Educational Hub | RightsInsight</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("https://static.vecteezy.com/system/resources/previews/027/105/968/large_2x/legal-law-and-justice-concept-open-law-book-with-a-wooden-judges-gavel-in-a-courtroom-or-law-enforcement-office-free-photo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+}
+
+
+/* FLOATING ORBS */
+.orbs span{
+    position:absolute;
+    width:120px;
+    height:120px;
+    background:rgba(255,255,255,0.15);
+    border-radius:50%;
+    animation:float 20s linear infinite;
+    bottom:-150px;
+}
+
+.orbs span:nth-child(1){left:10%;animation-duration:25s;}
+.orbs span:nth-child(2){left:30%;width:80px;height:80px;animation-duration:18s;}
+.orbs span:nth-child(3){left:55%;width:150px;height:150px;animation-duration:30s;}
+.orbs span:nth-child(4){left:75%;width:100px;height:100px;animation-duration:22s;}
+
+@keyframes float{
+    0%{transform:translateY(0) rotate(0deg);opacity:0.5;}
+    100%{transform:translateY(-1100px) rotate(360deg);opacity:0;}
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background:rgba(0,0,0,0.35);
+    position:relative;
+    z-index:2;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:700;
+}
+.logo span{color:#ffeb3b;}
+
+nav a{
+    color:#fff;
+    margin-left:22px;
+    text-decoration:none;
+    font-weight:500;
+    position:relative;
+}
+
+nav a::after{
+    content:"";
+    position:absolute;
+    width:0;
+    height:2px;
+    background:#ffeb3b;
+    left:0;
+    bottom:-5px;
+    transition:0.3s;
+}
+
+nav a:hover::after{width:100%;}
+
+/* HERO */
+.hub-hero{
+    text-align:center;
+    padding:70px 20px;
+    position:relative;
+    z-index:10;
+}
+
+.gradient-text {
+    font-size: 48px;
+    font-weight: 700;
+    color: #ffeb3b; /* fallback */
+    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+
+
+
+@keyframes glow{
+    from{text-shadow:0 0 10px #00e5ff;}
+    to{text-shadow:0 0 25px #00e5ff;}
+}
+
+.subtitle{
+    font-size:18px;
+    margin-top:12px;
+    opacity:0.95;
+}
+
+/* RIGHTS GRID */
+.rights-section{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+    padding:40px 60px;
+    position:relative;
+    z-index:2;
+}
+
+.right-card{
+    background:rgba(255,255,255,0.18);
+    padding:25px;
+    border-radius:18px;
+    cursor:pointer;
+    transition:transform 0.4s,box-shadow 0.4s;
+    animation:cardFloat 4s ease-in-out infinite;
+}
+
+.right-card:nth-child(2){animation-delay:0.5s;}
+.right-card:nth-child(3){animation-delay:1s;}
+.right-card:nth-child(4){animation-delay:1.5s;}
+
+@keyframes cardFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+.right-card:hover{
+    transform:scale(1.05);
+    box-shadow:0 20px 35px rgba(0,0,0,0.5);
+}
+
+.blue{border-left:5px solid #00e5ff;}
+.purple{border-left:5px solid #9c27b0;}
+.green{border-left:5px solid #4caf50;}
+.red{border-left:5px solid #f44336;}
+
+.right-card h3{margin-bottom:10px;}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.75);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-content{
+    background:#fff;
+    color:#333;
+    padding:30px;
+    width:90%;
+    max-width:650px;
+    border-radius:18px;
+    animation:zoom 0.4s ease;
+    position:relative;
+}
+
+@keyframes zoom{
+    from{transform:scale(0.7);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+.modal-content img{
+    width:120px;
+    display:block;
+    margin:15px auto;
+}
+
+.modal-content ul{margin-left:20px;}
+.modal-content li{margin-bottom:8px;}
+
+.example{
+    margin-top:15px;
+    padding:12px;
+    background:#f4f4f4;
+    border-left:4px solid #1e88e5;
+}
+
+.close{
+    position:absolute;
+    top:15px;
+    right:20px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:20px;
+    background:rgba(0,0,0,0.35);
+    margin-top:40px;
+    position:relative;
+    z-index:2;
+}
+</style>
+</head>
+
+<body>
+
+<div class="orbs">
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<header class="navbar">
+    <h2 class="logo">Rights<span>Insight</span></h2>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/education">Educational Hub</a>
+        <a href="/chat">AI Chatbot</a>
+        <a href="/about">About</a>
+    </nav>
+</header>
+
+<section class="hub-hero">
+    <h1 class="gradient-text">Educational Hub</h1>
+    <p class="subtitle">Interactive learning of Fundamental Rights</p>
+</section>
+
+<section class="rights-section">
+
+    <div class="right-card blue" onclick="openRight('equality')">
+        <h3>⚖️ Right to Equality</h3>
+        <p>Equality before law and equal protection.</p>
+    </div>
+
+    <div class="right-card purple" onclick="openRight('freedom')">
+        <h3>🗣️ Right to Freedom</h3>
+        <p>Speech, expression and personal liberty.</p>
+    </div>
+
+    <div class="right-card green" onclick="openRight('privacy')">
+        <h3>🔒 Right to Privacy</h3>
+        <p>Protection of personal life and dignity.</p>
+    </div>
+
+    <div class="right-card red" onclick="openRight('education')">
+        <h3>🎓 Right to Education</h3>
+        <p>Free and compulsory education for children.</p>
+    </div>
+
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="rightModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2 id="rightTitle"></h2>
+        <img id="rightImage">
+        <ul id="rightPoints"></ul>
+        <p class="example"><b>Example:</b> <span id="rightExample"></span></p>
+    </div>
+</div>
+
+<footer>
+    © 2025 RightsInsight | Educational Hub
+</footer>
+
+<script>
+const rightsData={
+equality:{
+title:"Right to Equality (Articles 14–18)",
+image:"https://cdn-icons-png.flaticon.com/512/3064/3064197.png",
+points:["Equality before law","No discrimination","Equal opportunity","Abolition of untouchability"],
+example:"Everyone must be treated equally in government jobs."
+},
+freedom:{
+title:"Right to Freedom (Articles 19–22)",
+image:"https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+points:["Freedom of speech","Freedom of movement","Right to assemble","Protection from illegal arrest"],
+example:"Peaceful protest is allowed under law."
+},
+privacy:{
+title:"Right to Privacy (Article 21)",
+image:"https://cdn-icons-png.flaticon.com/512/3064/3064207.png",
+points:["Data protection","No unauthorized surveillance","Right to dignity"],
+example:"Your phone cannot be searched without legal authority."
+},
+education:{
+title:"Right to Education (Article 21A)",
+image:"https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+points:["Free education (6–14 years)","Government responsibility","Equal access"],
+example:"School cannot deny admission due to poverty."
+}
+};
+
+function openRight(key){
+const d=rightsData[key];
+document.getElementById("rightTitle").innerText=d.title;
+document.getElementById("rightImage").src=d.image;
+const ul=document.getElementById("rightPoints");
+ul.innerHTML="";
+d.points.forEach(p=>{
+    let li=document.createElement("li");
+    li.innerText=p;
+    ul.appendChild(li);
+});
+document.getElementById("rightExample").innerText=d.example;
+document.getElementById("rightModal").style.display="flex";
+}
+
+function closeModal(){
+document.getElementById("rightModal").style.display="none";
+}
+</script>
+
+</body>
+</html>
