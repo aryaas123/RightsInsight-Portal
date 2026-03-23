@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Complaints | RightsInsight</title>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+body{
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:linear-gradient(120deg,#f0f4ff,#f9fbff);
+    margin:0;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 40px;
+    background:linear-gradient(90deg,#1e1e2f,#2c2c54);
+    box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.navbar .logo{
+    font-size:24px;
+    font-weight:700;
+    color:#ffb347;
+    letter-spacing:1px;
+}
+.navbar a{
+    color:#fff;
+    margin-left:25px;
+    text-decoration:none;
+    font-weight:500;
+}
+.navbar a:hover{
+    color:#ffb347;
+}
+
+/* PAGE */
+.container{
+    padding:40px;
+    max-width:1200px;
+    margin:auto;
+}
+h2{
+    color:#2c2c54;
+    margin-bottom:25px;
+    font-size:26px;
+}
+
+/* TABLE CARD */
+.table-card{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th,td{
+    padding:14px 16px;
+    border-bottom:1px solid #eee;
+}
+th{
+    background:#2c2c54;
+    color:#fff;
+    font-weight:600;
+}
+tr:hover{
+    background:#f5f7ff;
+}
+
+/* STATUS BADGES */
+.badge{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    display:inline-block;
+}
+.badge.approved{background:#e6fff0;color:#008a4b;}
+.badge.pending{background:#fff4e5;color:#c77700;}
+.badge.rejected{background:#ffe5e5;color:#c62828;}
+.badge.authority{background:#e8f0ff;color:#1a73e8;}
+
+/* BUTTONS */
+button{
+    padding:8px 14px;
+    border:none;
+    cursor:pointer;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:600;
+    transition:.2s;
+}
+.download-btn{
+    background:#0b6623;
+    color:#fff;
+}
+.download-btn:hover{
+    background:#0a541e;
+}
+.send-btn{
+    background:#b71c1c;
+    color:#fff;
+    margin-left:8px;
+}
+.send-btn:hover{
+    background:#9a1717;
+}
+.send-btn:disabled{
+    background:#9e9e9e;
+    cursor:not-allowed;
+}
+
+/* SENT LABEL */
+.sent-label{
+    color:#0b6623;
+    font-weight:600;
+    margin-left:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">RightsInsight</div>
+    <div>
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+<h2>📄 My Complaints</h2>
+
+<div class="table-card">
+<table>
+<tr>
+    <th>Category</th>
+    <th>Authority</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+
+{% for c in complaints %}
+<tr>
+    <td>{{ c.category }}</td>
+    <td>{{ c.authority }}</td>
+
+    <td>
+        {% if c.status != "APPROVED" %}
+            <span class="badge {{ c.status|lower }}">{{ c.status }}</span>
+        {% else %}
+            <div>
+                <strong>Admin:</strong>
+                <span class="badge approved">{{ c.status }}</span><br><br>
+                <strong>Authority:</strong>
+                <span class="badge authority">{{ c.authority_status }}</span>
+            </div>
+        {% endif %}
+    </td>
+
+    <td>
+        {% if c.status == "APPROVED" %}
+
+            <button class="download-btn"
+                    data-id="{{ c.id }}"
+                    onclick="downloadPDF(this)">
+                📥 Download
+            </button>
+
+            {% if c.sent_to_authority == 0 %}
+                <button class="send-btn"
+                        data-id="{{ c.id }}"
+                        onclick="sendComplaint(this)">
+                    📧 Send
+                </button>
+            {% else %}
+                <span class="sent-label">✔ Sent</span>
+            {% endif %}
+
+            <textarea id="complaint-{{ c.id }}" style="display:none;">
+{{ c.complaint }}
+            </textarea>
+
+        {% elif c.status == "PENDING" %}
+            ⏳ Waiting for approval
+        {% else %}
+            ❌ Rejected
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+<script>
+function downloadPDF(btn){
+    const { jsPDF } = window.jspdf;
+    const id = btn.getAttribute("data-id");
+    const text = document.getElementById("complaint-" + id).value;
+
+    const pdf = new jsPDF();
+    pdf.setFont("Times","Normal");
+    pdf.setFontSize(12);
+
+    const content = pdf.splitTextToSize(text, 180);
+    pdf.text(content, 15, 20);
+    pdf.save("Approved_Complaint_" + id + ".pdf");
+}
+
+function sendComplaint(btn){
+    const id = btn.getAttribute("data-id");
+
+    fetch("/send-to-authority", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            alert("📧 Complaint sent successfully!");
+            btn.disabled = true;
+            btn.innerText = "Sent";
+        } else {
+            alert("❌ " + data.error);
+        }
+    })
+    .catch(() => alert("❌ Server error"));
+}
+</script>
+
+</body>
+</html>
