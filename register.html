@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register | RightsInsight</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #020617, #0f172a, #1e1b4b);
+    overflow:hidden;
+    color:#e5e7eb;
+}
+
+/* FLOATING BACKGROUND SHAPES */
+.bg span{
+    position:absolute;
+    width:60px;
+    height:60px;
+    background:rgba(34,211,238,0.15);
+    border-radius:50%;
+    animation: float 20s linear infinite;
+    bottom:-150px;
+}
+
+.bg span:nth-child(1){left:10%;animation-duration:26s;}
+.bg span:nth-child(2){left:25%;width:90px;height:90px;animation-duration:32s;}
+.bg span:nth-child(3){left:50%;animation-duration:22s;}
+.bg span:nth-child(4){left:70%;width:80px;height:80px;animation-duration:28s;}
+.bg span:nth-child(5){left:85%;animation-duration:24s;}
+
+@keyframes float{
+    0%{transform:translateY(0);opacity:0.4;}
+    100%{transform:translateY(-1100px);opacity:0;}
+}
+
+/* REGISTER CARD (GLASS EFFECT) */
+.register-card{
+    position:relative;
+    z-index:2;
+    width:420px;
+    background: rgba(2, 6, 23, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding:45px 38px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 30px 60px rgba(0,0,0,0.7);
+    text-align:center;
+    animation: pop 1s ease;
+}
+
+@keyframes pop{
+    from{opacity:0;transform:scale(0.9);}
+    to{opacity:1;transform:scale(1);}
+}
+
+/* BRAND */
+.brand{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:#22d3ee;
+    letter-spacing:0.5px;
+}
+
+/* TITLE */
+.register-card h2{
+    color:#e5e7eb;
+    margin-bottom:8px;
+}
+
+.register-card p{
+    font-size:14px;
+    color:#cbd5f5;
+    margin-bottom:26px;
+}
+
+/* INPUTS */
+.input-box{
+    text-align:left;
+    margin-bottom:18px;
+}
+
+.input-box label{
+    font-size:13px;
+    color:#cbd5f5;
+    display:block;
+    margin-bottom:6px;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid #1e293b;
+    background:#020617;
+    color:#e5e7eb;
+    font-size:14px;
+    outline:none;
+}
+
+.input-box input::placeholder{
+    color:#64748b;
+}
+
+.input-box input:focus{
+    border-color:#22d3ee;
+    box-shadow:0 0 10px rgba(34,211,238,0.35);
+}
+
+/* PASSWORD HINT */
+#passwordHint{
+    font-size:12px;
+    margin-top:6px;
+    color:#fca5a5;
+    display:none;
+}
+
+/* BUTTON */
+.register-card button{
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border:none;
+    border-radius:30px;
+    background: linear-gradient(90deg, #22d3ee, #6366f1);
+    color:#020617;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform 0.3s, box-shadow 0.3s;
+}
+
+.register-card button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 25px rgba(99,102,241,0.6);
+}
+
+/* LINKS */
+.extra-links{
+    margin-top:22px;
+    font-size:14px;
+}
+
+.extra-links a{
+    color:#22d3ee;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.extra-links a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND SHAPES -->
+<div class="bg">
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- REGISTER CARD -->
+<div class="register-card">
+    <div class="brand">RightsInsight</div>
+    <h2>Create Account</h2>
+    <p>Join the RightsInsight Portal</p>
+
+    <form method="post" onsubmit="return validatePassword()">
+        <div class="input-box">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+        </div>
+
+        <div class="input-box">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" id="password" name="password"
+                   placeholder="Create a password" required onkeyup="checkPassword()">
+            <div id="passwordHint">
+                Password must be at least 6 characters, include a number and a special character.
+            </div>
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <div class="extra-links">
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+</div>
+
+<script>
+function checkPassword(){
+    const password = document.getElementById("password").value;
+    const hint = document.getElementById("passwordHint");
+    const pattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,}$/;
+
+    hint.style.display = pattern.test(password) ? "none" : "block";
+}
+
+function validatePassword(){
+    const password = document.getElementById("password").value;
+    const pattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,}$/;
+
+    if(!pattern.test(password)){
+        alert("Password must be at least 6 characters and include a number and special character.");
+        return false;
+    }
+    return true;
+}
+</script>
+
+</body>
+</html>
