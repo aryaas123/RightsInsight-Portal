@@ -1,40 +1,99 @@
 {
   "intents": [
     {
+      "tag": "greeting",
+      "patterns": ["hello","hi","hey","hii","helo","good morning","good afternoon","good evening","hi there","hello chatbot"],
+      "response": "Hello... Welcome to RightsInsight Portal. How can I assist you today? You can ask about your rights or file a complaint."
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["bye","goodbye","see you","exit","quit","talk to you later"],
+      "response": "Goodbye... If you have any more questions about your rights, feel free to return anytime."
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["thank you","thanks","thankyou","thanks a lot","ok thanks"],
+      "response": "You're welcome... I'm here to help you anytime."
+    },
+    {
+      "tag": "about_portal",
+      "patterns": ["what is rightsinsight","about this portal","what does this system do","how this portal works","tell me about this app"],
+      "response": "RightsInsight Portal helps users understand their rights, file complaints with evidence, and track them. Approved complaints are forwarded to the appropriate authority for action."
+    },
+    {
       "tag": "equality",
-      "patterns": [
-        "discrimination",
-        "unequal treatment",
-        "caste discrimination",
-        "gender inequality",
-        "I faced discrimination at work",
-        "I am treated unfairly",
-        "I feel unequal",
-        "unfair treatment in office"
-      ],
-      "response": "This may relate to the Right to Equality, which ensures equality before law."
+      "patterns": ["discrimination","unequal treatment","caste discrimination","gender inequality","I faced discrimination at work","I am treated unfairly"],
+      "response": "This may relate to the Right to Equality. You can file a complaint if your rights are violated."
     },
     {
       "tag": "speech",
-      "patterns": [
-        "freedom of speech",
-        "cannot express opinion",
-        "media restriction",
-        "I cannot speak freely",
-        "my opinion is ignored"
-      ],
+      "patterns": ["freedom of speech","cannot express opinion","I cannot speak freely","my opinion is ignored"],
       "response": "This relates to the Right to Freedom of Speech and Expression."
     },
     {
       "tag": "privacy",
-      "patterns": [
-        "phone monitoring",
-        "camera surveillance",
-        "data misuse",
-        "someone spying on me",
-        "my data is misused"
-      ],
+      "patterns": ["phone monitoring","data misuse","someone spying on me","privacy violation"],
       "response": "This situation may involve the Right to Privacy."
+    },
+    {
+      "tag": "education",
+      "patterns": ["right to education","denied admission","school not allowing me"],
+      "response": "This may relate to the Right to Education."
+    },
+    {
+      "tag": "exploitation",
+      "patterns": ["forced labor","child labor","working without pay"],
+      "response": "This relates to the Right against Exploitation."
+    },
+    {
+      "tag": "religion",
+      "patterns": ["religious discrimination","cannot practice religion"],
+      "response": "This may relate to the Right to Freedom of Religion."
+    },
+    {
+  "tag": "constitutional_remedy",
+  "patterns": [
+    "how to file complaint",
+    "how can I file a complaint",
+    "how to register complaint",
+    "how to lodge a complaint",
+    "what should I do if my rights are violated",
+    "my rights are violated what to do",
+    "how to get justice",
+    "how can I get legal help",
+    "where can I complain",
+    "how to report a problem",
+    "what is the complaint process",
+    "how to take legal action",
+    "help me file a complaint",
+    "I want to complain",
+    "where should I report my issue"
+  ],
+  "response": "If your rights are violated, you can file a complaint through the RightsInsight Portal. Go to the Complaint section, fill in details, upload evidence, and submit it. You can track its status in 'My Complaints'."
+},
+    {
+      "tag": "evidence",
+      "patterns": ["how to upload evidence","add proof","upload documents"],
+      "response": "You can upload documents or images as evidence while submitting a complaint."
+    },
+
+  
+{
+      "tag": "check_status_steps",
+      "patterns": [
+        "how to check complaints status",
+        "steps to track complaints",
+        "how can I see my complaints status",
+        "track my complaints steps",
+        "where to check complaints status",
+        "how to view complaints progress",
+        "how to check my complaints",
+        "complaints status",
+        "track complaints",
+        "check status"
+      ],
+      "response": "To check your complaint status: Login to your account, go to 'My Complaints', view your complaints, and check status (Pending / Approved / Rejected)."
     }
+
   ]
 }
