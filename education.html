@@ -8,39 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
     background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
         url("https://static.vecteezy.com/system/resources/previews/027/105/968/large_2x/legal-law-and-justice-concept-open-law-book-with-a-wooden-judges-gavel-in-a-courtroom-or-law-enforcement-office-free-photo.jpg");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #fff;
-}
-
-
-/* FLOATING ORBS */
-.orbs span{
-    position:absolute;
-    width:120px;
-    height:120px;
-    background:rgba(255,255,255,0.15);
-    border-radius:50%;
-    animation:float 20s linear infinite;
-    bottom:-150px;
-}
-
-.orbs span:nth-child(1){left:10%;animation-duration:25s;}
-.orbs span:nth-child(2){left:30%;width:80px;height:80px;animation-duration:18s;}
-.orbs span:nth-child(3){left:55%;width:150px;height:150px;animation-duration:30s;}
-.orbs span:nth-child(4){left:75%;width:100px;height:100px;animation-duration:22s;}
-
-@keyframes float{
-    0%{transform:translateY(0) rotate(0deg);opacity:0.5;}
-    100%{transform:translateY(-1100px) rotate(360deg);opacity:0;}
+    background-size:cover;
+    background-attachment:fixed;
+    color:#fff;
 }
 
 /* NAVBAR */
@@ -50,151 +27,103 @@ body {
     align-items:center;
     padding:20px 50px;
     background:rgba(0,0,0,0.35);
-    position:relative;
-    z-index:2;
 }
-
 .logo{
     font-size:26px;
     font-weight:700;
 }
 .logo span{color:#ffeb3b;}
-
 nav a{
     color:#fff;
-    margin-left:22px;
+    margin-left:20px;
     text-decoration:none;
     font-weight:500;
-    position:relative;
 }
-
-nav a::after{
-    content:"";
-    position:absolute;
-    width:0;
-    height:2px;
-    background:#ffeb3b;
-    left:0;
-    bottom:-5px;
-    transition:0.3s;
-}
-
-nav a:hover::after{width:100%;}
 
 /* HERO */
 .hub-hero{
     text-align:center;
-    padding:70px 20px;
-    position:relative;
-    z-index:10;
+    padding:60px 20px;
 }
-
-.gradient-text {
-    font-size: 48px;
-    font-weight: 700;
-    color: #ffeb3b; /* fallback */
-    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+.gradient-text{
+    font-size:48px;
+    font-weight:700;
+    color:#ffeb3b;
 }
-
-
-
-@keyframes glow{
-    from{text-shadow:0 0 10px #00e5ff;}
-    to{text-shadow:0 0 25px #00e5ff;}
-}
-
 .subtitle{
     font-size:18px;
-    margin-top:12px;
-    opacity:0.95;
+    margin-top:10px;
 }
 
-/* RIGHTS GRID */
+/* GRID */
 .rights-section{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:30px;
     padding:40px 60px;
-    position:relative;
-    z-index:2;
 }
-
 .right-card{
     background:rgba(255,255,255,0.18);
-    padding:25px;
+    padding:20px;
     border-radius:18px;
     cursor:pointer;
-    transition:transform 0.4s,box-shadow 0.4s;
-    animation:cardFloat 4s ease-in-out infinite;
+    transition:0.4s;
 }
-
-.right-card:nth-child(2){animation-delay:0.5s;}
-.right-card:nth-child(3){animation-delay:1s;}
-.right-card:nth-child(4){animation-delay:1.5s;}
-
-@keyframes cardFloat{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-10px);}
-}
-
 .right-card:hover{
     transform:scale(1.05);
     box-shadow:0 20px 35px rgba(0,0,0,0.5);
 }
-
-.blue{border-left:5px solid #00e5ff;}
-.purple{border-left:5px solid #9c27b0;}
-.green{border-left:5px solid #4caf50;}
-.red{border-left:5px solid #f44336;}
-
-.right-card h3{margin-bottom:10px;}
+.right-img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:10px;
+}
 
 /* MODAL */
 .modal{
     display:none;
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    inset:0;
     background:rgba(0,0,0,0.75);
     justify-content:center;
     align-items:center;
     z-index:999;
 }
-
 .modal-content{
     background:#fff;
     color:#333;
     padding:30px;
-    width:90%;
-    max-width:650px;
+    width:95%;
+    max-width:850px;
     border-radius:18px;
-    animation:zoom 0.4s ease;
     position:relative;
+    max-height:90vh;
+    overflow-y:auto;
 }
-
-@keyframes zoom{
-    from{transform:scale(0.7);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-}
-
 .modal-content img{
-    width:120px;
-    display:block;
-    margin:15px auto;
+    width:100%;
+    max-height:260px;
+    object-fit:cover;
+    border-radius:12px;
+    margin:15px 0;
 }
-
-.modal-content ul{margin-left:20px;}
-.modal-content li{margin-bottom:8px;}
-
+.modal-content ul{
+    margin-left:20px;
+}
 .example{
     margin-top:15px;
     padding:12px;
     background:#f4f4f4;
     border-left:4px solid #1e88e5;
 }
-
+.importance{
+    margin-top:15px;
+    padding:12px;
+    background:#e3f2fd;
+    border-left:4px solid #0d47a1;
+}
 .close{
     position:absolute;
     top:15px;
@@ -208,118 +137,200 @@ footer{
     text-align:center;
     padding:20px;
     background:rgba(0,0,0,0.35);
-    margin-top:40px;
-    position:relative;
-    z-index:2;
 }
 </style>
 </head>
 
 <body>
 
-<div class="orbs">
-    <span></span><span></span><span></span><span></span>
-</div>
-
 <header class="navbar">
     <h2 class="logo">Rights<span>Insight</span></h2>
     <nav>
         <a href="/">Home</a>
-        <a href="/education">Educational Hub</a>
-        <a href="/chat">AI Chatbot</a>
-        <a href="/about">About</a>
+        <a href="/logout">Logout</a>
     </nav>
 </header>
 
 <section class="hub-hero">
     <h1 class="gradient-text">Educational Hub</h1>
-    <p class="subtitle">Interactive learning of Fundamental Rights</p>
+    <p class="subtitle">Explanation of Fundamental Rights of India</p>
 </section>
 
 <section class="rights-section">
 
-    <div class="right-card blue" onclick="openRight('equality')">
-        <h3>⚖️ Right to Equality</h3>
-        <p>Equality before law and equal protection.</p>
-    </div>
+<div class="right-card" onclick="openRight('equality')">
+    <img src="https://img.freepik.com/premium-photo/human-rights-day-empowering-equality-justice-all_1252102-41193.jpg?size=626&ext=jpg" class="right-img">
+    <h3>Right to Equality</h3>
+    <p>Articles 14–18</p>
+</div>
 
-    <div class="right-card purple" onclick="openRight('freedom')">
-        <h3>🗣️ Right to Freedom</h3>
-        <p>Speech, expression and personal liberty.</p>
-    </div>
+<div class="right-card" onclick="openRight('freedom')">
+    <img src="https://cdn.vectorstock.com/i/1000v/81/55/freedom-liberty-free-symbol-hand-raised-fist-vector-17458155.jpg" class="right-img">
+    <h3>Right to Freedom</h3>
+    <p>Articles 19–22</p>
+</div>
 
-    <div class="right-card green" onclick="openRight('privacy')">
-        <h3>🔒 Right to Privacy</h3>
-        <p>Protection of personal life and dignity.</p>
-    </div>
+<div class="right-card" onclick="openRight('exploitation')">
+    <img src="https://www.cheggindia.com/wp-content/uploads/2023/12/right-against-exploitation.png" class="right-img">
+    <h3>Right Against Exploitation</h3>
+    <p>Articles 23–24</p>
+</div>
 
-    <div class="right-card red" onclick="openRight('education')">
-        <h3>🎓 Right to Education</h3>
-        <p>Free and compulsory education for children.</p>
-    </div>
+<div class="right-card" onclick="openRight('religion')">
+    <img src="http://doesgodexist.today/wp-content/uploads/2018/08/Freedom-of-Religion-1024x721.jpg" class="right-img">
+    <h3>Freedom of Religion</h3>
+    <p>Articles 25–28</p>
+</div>
+
+<div class="right-card" onclick="openRight('culture')">
+    <img src="https://i.ytimg.com/vi/BRV2KADHUOQ/hqdefault.jpg" class="right-img">
+    <h3>Cultural & Educational Rights</h3>
+    <p>Articles 29–30</p>
+</div>
+
+<div class="right-card" onclick="openRight('remedy')">
+    <img src="https://advocategandhi.com/wp-content/uploads/2025/12/Constitutional-Remedies-as-Fundamental-Rights-The-Legal-Shield-That-Protects-Indian-Democracy-1024x683.png" class="right-img">
+    <h3>Constitutional Remedies</h3>
+    <p>Article 32</p>
+</div>
 
 </section>
 
 <!-- MODAL -->
 <div class="modal" id="rightModal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">×</span>
-        <h2 id="rightTitle"></h2>
-        <img id="rightImage">
-        <ul id="rightPoints"></ul>
-        <p class="example"><b>Example:</b> <span id="rightExample"></span></p>
-    </div>
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<h2 id="rightTitle"></h2>
+<img id="rightImage">
+<ul id="rightPoints"></ul>
+<div class="importance">
+<b>Importance:</b>
+<p id="rightImportance"></p>
+</div>
+<div class="example">
+<b>Example:</b>
+<p id="rightExample"></p>
+</div>
+</div>
 </div>
 
-<footer>
-    © 2025 RightsInsight | Educational Hub
-</footer>
+<footer>© 2025 RightsInsight | Educational Hub</footer>
 
 <script>
-const rightsData={
+const rightsData = {
+
 equality:{
-title:"Right to Equality (Articles 14–18)",
-image:"https://cdn-icons-png.flaticon.com/512/3064/3064197.png",
-points:["Equality before law","No discrimination","Equal opportunity","Abolition of untouchability"],
-example:"Everyone must be treated equally in government jobs."
+ title:"Right to Equality (Articles 14–18)",
+ image:"https://png.pngtree.com/thumb_back/fw800/background/20241213/pngtree-empowering-poster-with-justice-and-equality-words-image_16777544.jpg",
+ points:[
+  "Ensures equality before law and equal protection of laws.",
+  "Prohibits discrimination based on religion, race, caste, sex or place of birth.",
+  "Guarantees equal opportunity in government employment.",
+  "Abolishes untouchability and declares it punishable.",
+  "Abolishes titles except military and academic distinctions.",
+  "Promotes justice, fairness, and social equality.",
+  "Forms the foundation of democratic governance."
+ ],
+ importance:"This right ensures that no citizen is above the law and promotes social justice by treating everyone equally.",
+ example:"A government job cannot be denied to a qualified person due to caste or religion."
 },
+
 freedom:{
-title:"Right to Freedom (Articles 19–22)",
-image:"https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-points:["Freedom of speech","Freedom of movement","Right to assemble","Protection from illegal arrest"],
-example:"Peaceful protest is allowed under law."
+ title:"Right to Freedom (Articles 19–22)",
+ image:"https://img.freepik.com/premium-photo/right-freedom-from-slavery_670382-97085.jpg",
+ points:[
+  "Guarantees freedom of speech and expression.",
+  "Allows peaceful assembly and association.",
+  "Ensures free movement and residence throughout India.",
+  "Protects the right to practice any profession.",
+  "Article 21 guarantees protection of life and personal liberty.",
+  "Article 22 safeguards against arbitrary arrest and detention.",
+  "Subject to reasonable restrictions for public order and security."
+ ],
+ importance:"These freedoms enable citizens to participate actively in a democratic society.",
+ example:"Citizens can express opinions and criticize government policies peacefully."
 },
-privacy:{
-title:"Right to Privacy (Article 21)",
-image:"https://cdn-icons-png.flaticon.com/512/3064/3064207.png",
-points:["Data protection","No unauthorized surveillance","Right to dignity"],
-example:"Your phone cannot be searched without legal authority."
+
+exploitation:{
+ title:"Right Against Exploitation (Articles 23–24)",
+ image:"https://media.geeksforgeeks.org/wp-content/uploads/20231121163305/Right-Against-Exploitation.webp",
+ points:[
+  "Prohibits human trafficking and bonded labour.",
+  "Bans forced labour without payment.",
+  "Prohibits employment of children below 14 years in hazardous work.",
+  "Protects vulnerable sections of society.",
+  "Ensures dignity of labour.",
+  "Promotes humane working conditions."
+ ],
+ importance:"This right protects the poor, women, and children from exploitation and abuse.",
+ example:"Children cannot be employed in factories, mines, or hazardous industries."
 },
-education:{
-title:"Right to Education (Article 21A)",
-image:"https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-points:["Free education (6–14 years)","Government responsibility","Equal access"],
-example:"School cannot deny admission due to poverty."
+
+religion:{
+ title:"Freedom of Religion (Articles 25–28)",
+ image:"https://blogmedia.testbook.com/blog/wp-content/uploads/2023/08/right-to-freedom-of-religion-404ca77f.webp",
+ points:[
+  "Guarantees freedom of conscience.",
+  "Allows citizens to practice, profess, and propagate religion.",
+  "Permits religious institutions to manage their affairs.",
+  "Prohibits compulsory religious taxes.",
+  "Ensures secular character of the state.",
+  "Promotes religious harmony."
+ ],
+ importance:"This right ensures peaceful coexistence of different religions in India.",
+ example:"A citizen is free to follow or change their religion."
+},
+
+culture:{
+ title:"Cultural and Educational Rights (Articles 29–30)",
+ image:"https://www.studyiq.com/articles/wp-content/uploads/2023/09/11162610/Cultural-and-Educational-Rights.jpg",
+ points:[
+  "Protects minority languages, scripts, and cultures.",
+  "Allows minorities to establish and administer institutions.",
+  "Prevents discrimination in educational institutions.",
+  "Preserves India’s cultural diversity.",
+  "Encourages unity in diversity."
+ ],
+ importance:"This right safeguards the cultural identity of minorities.",
+ example:"Minority communities can run schools to preserve their traditions."
+},
+
+remedy:{
+ title:"Right to Constitutional Remedies (Article 32)",
+ image:"https://www.joshtalks.com/_next/image?url=https:%2F%2Fstorage.googleapis.com%2Fjoshtalks-ias.appspot.com%2Fbanner-constitutional-remedies.png&w=1200&q=75",
+ points:[
+  "Allows direct access to the Supreme Court.",
+  "Provides writs like Habeas Corpus and Mandamus.",
+  "Ensures enforcement of Fundamental Rights.",
+  "Acts as guardian of the Constitution.",
+  "Strengthens the rule of law."
+ ],
+ importance:"This right makes all other Fundamental Rights effective and enforceable.",
+ example:"A citizen can file a writ petition if their rights are violated."
 }
+
 };
 
 function openRight(key){
-const d=rightsData[key];
-document.getElementById("rightTitle").innerText=d.title;
-document.getElementById("rightImage").src=d.image;
-const ul=document.getElementById("rightPoints");
-ul.innerHTML="";
-d.points.forEach(p=>{
-    let li=document.createElement("li");
-    li.innerText=p;
-    ul.appendChild(li);
-});
-document.getElementById("rightExample").innerText=d.example;
-document.getElementById("rightModal").style.display="flex";
+ const d = rightsData[key];
+ document.getElementById("rightTitle").innerText = d.title;
+ document.getElementById("rightImage").src = d.image;
+
+ const ul = document.getElementById("rightPoints");
+ ul.innerHTML = "";
+ d.points.forEach(p=>{
+   const li = document.createElement("li");
+   li.innerText = p;
+   ul.appendChild(li);
+ });
+
+ document.getElementById("rightImportance").innerText = d.importance;
+ document.getElementById("rightExample").innerText = d.example;
+ document.getElementById("rightModal").style.display = "flex";
 }
 
 function closeModal(){
-document.getElementById("rightModal").style.display="none";
+ document.getElementById("rightModal").style.display = "none";
 }
 </script>
 
