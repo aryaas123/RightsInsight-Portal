@@ -5,253 +5,344 @@
 <title>AI Complaint Generator | RightsInsight</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", Arial, sans-serif;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Poppins",sans-serif;
 }
 
-body {
-    min-height: 100vh;
-    background: linear-gradient(
-        rgba(0,0,0,0.6),
-        rgba(0,0,0,0.6)
-    ),
-    url("https://recordoflaw.in/wp-content/uploads/2025/02/DALL%C2%B7E-2025-02-12-11.46.20-A-symbolic-and-thought-provoking-landscape-image-representing-legal-bias-and-the-misuse-of-laws-in-matrimonial-disputes-in-India.-The-scene-features-a.webp");
-    background-size: cover;
-    background-position: center;
-    color: #f2f0f0;
+body{
+min-height:100vh;
+background:
+linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+url("https://recordoflaw.in/wp-content/uploads/2025/02/DALL%C2%B7E-2025-02-12-11.46.20-A-symbolic-and-thought-provoking-landscape-image-representing-legal-bias-and-the-misuse-of-laws-in-matrimonial-disputes-in-India.webp");
+background-size:cover;
+background-position:center;
+display:flex;
+flex-direction:column;
 }
 
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background: rgba(0,0,0,0.6);
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 50px;
+background:rgba(0,0,0,0.75);
+backdrop-filter:blur(6px);
+border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: #f17109;
+.logo{
+font-size:26px;
+font-weight:700;
+color:#ff8c42;
+letter-spacing:1px;
 }
 
-.navbar a {
-    margin-left: 20px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
+.navbar a{
+margin-left:22px;
+color:#fff;
+text-decoration:none;
+font-size:15px;
+transition:0.3s;
 }
 
-.navbar a:hover {
-    color: #ffeb3b;
+.navbar a:hover{
+color:#ff8c42;
 }
 
-/* Container */
-.wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 15px;
+/* WRAPPER */
+
+.wrapper{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:30px;
 }
 
-.container {
-    background: #ca6161;
-    color: #000;
-    width: 520px;
-    max-width: 95%;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+/* CONTAINER */
+
+.container{
+width:520px;
+background:rgba(220, 144, 144, 0.92);
+padding:35px;
+border-radius:18px;
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+animation:fadeIn 0.8s ease;
 }
 
-/* Heading */
-.container h2 {
-    text-align: center;
-    color: #1e3c72;
-    margin-bottom: 20px;
+.container h2{
+text-align:center;
+color:#1e3c72;
+margin-bottom:20px;
 }
 
-/* Form elements */
-label {
-    font-weight: 600;
-    margin-top: 12px;
-    display: block;
+/* FORM */
+
+label{
+font-weight:600;
+margin-top:12px;
+display:block;
+color:#524b4b;
 }
 
-select, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    outline: none;
+select,textarea,input{
+width:100%;
+padding:11px;
+margin-top:6px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:14px;
+transition:0.2s;
 }
 
-textarea {
-    resize: none;
+select:focus,textarea:focus,input:focus{
+border-color:#1e3c72;
+outline:none;
+box-shadow:0 0 5px rgba(30,60,114,0.3);
 }
 
-/* Button */
-button {
-    margin-top: 18px;
-    width: 100%;
-    padding: 12px;
-    background: #1e3c72;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
+input[readonly]{
+background:#f1f1f1;
 }
 
-button:hover {
-    background: #16325c;
+/* BUTTONS */
+
+button{
+margin-top:18px;
+width:100%;
+padding:13px;
+border:none;
+border-radius:8px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
 }
 
-/* Warning */
-.warning {
-    display: none;
-    margin-top: 12px;
-    color: #b00020;
-    font-weight: 600;
-    text-align: center;
+button:hover{
+transform:scale(1.03);
 }
 
-/* Loader */
-.loader {
-    display: none;
-    margin: 20px auto;
-    border: 5px solid #ddd;
-    border-top: 5px solid #1e3c72;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
+.generate{
+background:linear-gradient(45deg,#1e3c72,#2a5298);
+color:white;
 }
 
-@keyframes spin {
-    100% { transform: rotate(360deg); }
+.download-btn{
+display:none;
+background:linear-gradient(45deg,#1b5e20,#2e7d32);
+color:white;
 }
 
-/* Output */
-.output {
-    margin-top: 20px;
-    padding: 15px;
-    background: #5eb3d8;
-    border-radius: 8px;
-    white-space: pre-wrap;
-    animation: fadeIn 0.6s ease-in-out;
+.send-btn{
+display:none;
+background:linear-gradient(45deg,#b71c1c,#e53935);
+color:white;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* OUTPUT */
+
+.output{
+margin-top:20px;
+padding:15px;
+background:#e3f2fd;
+border-left:5px solid #1e3c72;
+border-radius:8px;
+white-space:pre-wrap;
+font-size:14px;
+max-height:250px;
+overflow:auto;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 15px;
-    font-size: 14px;
-    background: rgba(0,0,0,0.6);
-    margin-top: 30px;
+/* STATUS */
+
+.status{
+margin-top:14px;
+font-weight:600;
+text-align:center;
+font-size:15px;
 }
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <header class="navbar">
-    <div class="logo">RightsInsight</div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/education">Education</a>
-        <a href="/chat">AI Chatbot</a>
-        <a href="/about">About</a>
-    </nav>
+<div class="logo">RightsInsight</div>
+<nav>
+<a href="/">Home</a>
+<a href="/education">Eductional Hub</a>
+<a href="/chat">AI Chatbot</a>
+<a href="/evidence">Evidence Vault</a>
+<a href="/mycomplaints">Mycomplaints</a>
+<a href="/logout">Logout</a>
+</nav>
 </header>
 
-<!-- CONTENT -->
 <div class="wrapper">
-    <div class="container">
-        <h2>AI Complaint Generator</h2>
+<div class="container">
 
-        <label>Complaint Category</label>
-        <select id="category">
-            <option>Workplace Discrimination</option>
-            <option>Harassment</option>
-            <option>Privacy Violation</option>
-            <option>Denial of Education</option>
-            <option>Violation of Fundamental Rights</option>
-        </select>
+<h2>AI Complaint Generator</h2>
 
-        <label>Describe the Incident</label>
-        <textarea id="incident" rows="5"
-            placeholder="Explain what happened, when it occurred, and who was involved..."></textarea>
+<label>Complaint Category</label>
+<select id="category">
+<option>Workplace Discrimination</option>
+<option>Harassment</option>
+<option>Privacy Violation</option>
+<option>Denial of Education</option>
+<option>Violation of Fundamental Rights</option>
+</select>
 
-        <button onclick="generateComplaint()">Generate Complaint</button>
+<label>Authority</label>
+<input type="text" id="authority" readonly>
 
-        <div class="warning" id="warningMsg">
-            ⚠️ Please describe the incident before generating the complaint.
-        </div>
+<label>Describe the Incident</label>
+<textarea id="incident" rows="5" placeholder="Explain what happened clearly..."></textarea>
 
-        <div class="loader" id="loader"></div>
+<button class="generate" onclick="generateComplaint()">Generate Complaint</button>
 
-        <div class="output" id="result"></div>
-    </div>
+<div class="status" id="statusMsg"></div>
+<div class="output" id="result"></div>
+
+<button id="downloadBtn" class="download-btn" onclick="downloadPDF()">Download Approved Complaint</button>
+
+<button id="sendBtn" class="send-btn" onclick="sendToAuthority()">Send to Authority</button>
+
+</div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-    © 2026 RightsInsight Portal | Automated Complaint Module
-</footer>
-
-<!-- SCRIPT -->
 <script>
-function generateComplaint() {
-    const category = document.getElementById("category").value;
-    const incident = document.getElementById("incident").value.trim();
 
-    const warning = document.getElementById("warningMsg");
-    const loader = document.getElementById("loader");
-    const result = document.getElementById("result");
+const authorityMap={
+"Workplace Discrimination":"Labour Commissioner",
+"Harassment":"Local Police Station",
+"Privacy Violation":"Cyber Crime Cell",
+"Denial of Education":"Education Department",
+"Violation of Fundamental Rights":"Human Rights Commission"
+};
 
-    warning.style.display = "none";
-    result.innerText = "";
-    loader.style.display = "none";
+let generatedComplaint="";
+let complaintId=null;
 
-    if (incident === "") {
-        warning.style.display = "block";
-        return;
-    }
-
-    loader.style.display = "block";
-
-    fetch("/generate-complaint", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            category: category,
-            incident: incident
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        loader.style.display = "none";
-        result.innerText = data.complaint;
-    })
-    .catch(() => {
-        loader.style.display = "none";
-        result.innerText = "❌ Error generating complaint. Please try again.";
-    });
+function updateAuthority(){
+authority.value=authorityMap[category.value];
 }
+updateAuthority();
+category.addEventListener("change",updateAuthority);
+
+/* GENERATE COMPLAINT */
+
+function generateComplaint(){
+
+if(!incident.value.trim()){
+alert("Please describe the incident");
+return;
+}
+
+fetch("/generate-complaint",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+category:category.value,
+incident:incident.value
+})
+})
+.then(res=>res.json())
+.then(data=>{
+
+generatedComplaint=data.complaint;
+complaintId=data.id;
+
+result.innerText=generatedComplaint;
+
+statusMsg.innerText="⏳ Waiting for admin approval";
+
+downloadBtn.style.display="block";
+downloadBtn.disabled=true;
+
+sendBtn.style.display="none";
+
+setInterval(()=>checkStatus(),5000);
+
+});
+}
+
+/* CHECK STATUS */
+
+function checkStatus(){
+
+fetch(`/check-status/${complaintId}`)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.status==="APPROVED"){
+statusMsg.innerText="✅ Complaint approved by admin";
+downloadBtn.disabled=false;
+sendBtn.style.display="block";
+}
+
+if(data.status==="REJECTED"){
+statusMsg.innerText="❌ Complaint rejected by admin";
+}
+
+});
+
+}
+
+/* DOWNLOAD PDF */
+
+function downloadPDF(){
+
+const { jsPDF }=window.jspdf;
+const pdf=new jsPDF();
+
+const text=pdf.splitTextToSize(generatedComplaint,180);
+
+pdf.text(text,15,20);
+
+pdf.save("Approved_Complaint.pdf");
+
+}
+
+/* SEND */
+
+function sendToAuthority(){
+
+fetch("/send-to-authority",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+id:complaintId
+})
+})
+.then(()=>{
+
+statusMsg.innerText="📤 Complaint sent successfully to authority";
+sendBtn.style.display="none";
+
+});
+
+}
+
 </script>
 
 </body>
