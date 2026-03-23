@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authority Dashboard</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* SEARCH BAR */
+        .search-box {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .search-box input {
+            padding: 8px;
+            width: 250px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 6px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            height: 60px;
+        }
+
+        button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .update-btn {
+            background: #4CAF50;
+            color: white;
+            width: 100%;
+        }
+
+        .update-btn:hover {
+            background: #45a049;
+        }
+
+        .view-btn {
+            background: #007bff;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .view-btn:hover {
+            background: #0056b3;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .NOT_RECEIVED { background: #ffcccc; }
+        .RECEIVED { background: #fff3cd; }
+        .IN_PROGRESS { background: #cce5ff; }
+        .RESOLVED { background: #d4edda; }
+
+    </style>
+
+    <script>
+        function searchTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📋 Authority Dashboard</h2>
+
+    <!-- 🔍 SEARCH -->
+    <div class="search-box">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search complaints...">
+    </div>
+
+    {% if complaints %}
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Category</th>
+            <th>Complaint</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.id }}</td>
+            <td>{{ complaint.username }}</td>
+            <td>{{ complaint.category }}</td>
+            <td>{{ complaint.complaint }}</td>
+
+            <td>
+                <span class="status {{ complaint.authority_status }}">
+                    {{ complaint.authority_status }}
+                </span>
+            </td>
+
+            <td>
+               
+
+                <form method="POST" action="/authority/update">
+                    <input type="hidden" name="id" value="{{ complaint.id }}">
+
+                    <select name="status">
+                        <option value="NOT_RECEIVED">NOT RECEIVED</option>
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="IN_PROGRESS">IN PROGRESS</option>
+                        <option value="RESOLVED">RESOLVED</option>
+                    </select>
+
+                    <br><br>
+
+                    <textarea name="reply" placeholder="Write your reply..."></textarea>
+
+                    <br><br>
+
+                    <button type="submit" class="update-btn">✔ Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <p style="text-align:center;">No complaints found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
