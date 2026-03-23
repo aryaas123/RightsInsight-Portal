@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Evidence Vault</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    background:linear-gradient(to right,#6a11cb,#2575fc);
+    min-height:100vh;
+}
+
+/* NAVBAR */
+.navbar{
+    background:#1a1a1a;
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 30px;
+}
+
+.navbar a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:20px;
+}
+
+.navbar a:hover{
+    color:#6a11cb;
+}
+
+/* CONTAINER */
+.container{
+    max-width:1000px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+h2{
+    text-align:center;
+    color:#fff;
+    margin-bottom:30px;
+}
+
+/* UPLOAD CARD */
+.upload-card{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+    margin-bottom:40px;
+    text-align:center;
+}
+
+.upload-card input,
+.upload-card button{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.upload-card button{
+    background:#2575fc;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+}
+
+.upload-card button:hover{
+    background:#6a11cb;
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 15px rgba(0,0,0,0.15);
+}
+
+th,td{
+    padding:12px 15px;
+    border-bottom:1px solid #ddd;
+}
+
+th{
+    background:#2575fc;
+    color:#fff;
+    text-transform:uppercase;
+}
+
+/* ACTION ROW FIX */
+.action-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:nowrap;
+}
+
+.action-row form{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.action-row input[type="password"]{
+    width:120px;
+    padding:6px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.action-row button{
+    padding:6px 12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    color:#fff;
+}
+
+/* BUTTON COLORS */
+.download-btn{
+    background:#2575fc;
+}
+.download-btn:hover{
+    background:#6a11cb;
+}
+
+.delete-btn{
+    background:#dc3545;
+}
+.delete-btn:hover{
+    background:#b02a37;
+}
+
+/* ALERTS */
+.alert{
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:8px;
+    font-weight:500;
+    text-align:center;
+}
+
+.alert.error{
+    background:#ffe5e5;
+    color:#b30000;
+    border:1px solid #ffb3b3;
+}
+
+.alert.success{
+    background:#e6fff4;
+    color:#0f5132;
+    border:1px solid #a3f7c2;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+    .action-row{
+        flex-wrap:wrap;
+    }
+    .action-row input[type="password"]{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h1>Evidence Vault</h1>
+    <div>
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+<h2>Upload Evidence</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="upload-card">
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="password" name="password" placeholder="Encryption password" required>
+        <button type="submit">Secure Upload</button>
+    </form>
+</div>
+
+<table>
+<thead>
+<tr>
+    <th>File Name</th>
+    <th>Uploaded At</th>
+    <th>Last Downloaded</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for e in evidences %}
+<tr>
+    <td>{{ e.filename }}</td>
+    <td>{{ e.uploaded_at or "N/A" }}</td>
+    <td>{{ e.downloaded_at or "Never" }}</td>
+    <td>
+        <div class="action-row">
+
+            <!-- DECRYPT -->
+            <form action="/download/{{ e.id }}" method="post">
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="download-btn">
+                    Decrypt
+                </button>
+            </form>
+
+            <!-- DELETE -->
+            <form action="/delete/{{ e.id }}" method="post">
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit"
+                        class="delete-btn"
+                        onclick="return confirm('Confirm delete?')">
+                    Delete
+                </button>
+            </form>
+
+        </div>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+</body>
+</html>
